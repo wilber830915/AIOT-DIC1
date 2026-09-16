@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal space and live precision clock dashboard featuring dynamic greetings, customizable profile, and world times.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+  <title>Personal Space &amp; Precision Clock</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-aurora">
+  <!-- Dynamic Ambient Background Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="app-container">
+    <!-- Navigation / Top Bar -->
+    <header class="top-nav glass-panel">
+      <div class="brand">
+        <span class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text" id="live-status-text">Live Clock</span>
+        </span>
+      </div>
+
+      <div class="nav-controls">
+        <!-- 12h / 24h Toggle -->
+        <div class="toggle-group" title="Toggle 12/24 hour time format">
+          <button id="format-toggle" class="btn-toggle" aria-label="Toggle time format">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-label" id="format-label">24H</span>
+          </button>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="theme-switchers" id="theme-switchers" role="group" aria-label="Select Theme">
+          <button class="theme-btn active" data-theme="theme-aurora" title="Aurora Violet">
+            <span class="theme-swatch swatch-aurora"></span>
+          </button>
+          <button class="theme-btn" data-theme="theme-cyber" title="Cyber Cyan">
+            <span class="theme-swatch swatch-cyber"></span>
+          </button>
+          <button class="theme-btn" data-theme="theme-sunset" title="Sunset Amber">
+            <span class="theme-swatch swatch-sunset"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-layout">
+      <!-- Clock Showcase Hero Card -->
+      <section class="card glass-panel clock-hero-card" aria-label="Current Time">
+        <div class="card-header">
+          <div class="greeting-badge" id="greeting-badge">
+            <span class="greeting-icon" id="greeting-icon">✨</span>
+            <span class="greeting-text" id="greeting-text">Welcome</span>
+          </div>
+          <button id="copy-time-btn" class="action-icon-btn" title="Copy formatted time to clipboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="btn-tooltip">Copy Time</span>
+          </button>
+        </div>
+
+        <!-- Digital Big Display -->
+        <div class="clock-display-wrap">
+          <div class="clock-digits" id="clock-display" aria-live="off">
+            <span class="digit-segment hours" id="hours">00</span>
+            <span class="digit-separator">:</span>
+            <span class="digit-segment minutes" id="minutes">00</span>
+            <span class="digit-separator">:</span>
+            <span class="digit-segment seconds" id="seconds">00</span>
+            <span class="ampm-badge" id="ampm-indicator"></span>
+          </div>
+        </div>
+
+        <!-- Date & Timezone Details -->
+        <div class="clock-meta">
+          <div class="date-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="current-date">Loading date...</span>
+          </div>
+          
+          <div class="timezone-chip" id="timezone-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="current-timezone">Detecting timezone...</span>
+          </div>
+        </div>
+
+        <!-- Day Elapsed Progress Bar -->
+        <div class="progress-section">
+          <div class="progress-info">
+            <span>Day Progress</span>
+            <span id="day-progress-percent">0% completed</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-bar" id="day-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile & Identity Card -->
+      <section class="card glass-panel profile-card" aria-label="User Profile">
+        <div class="profile-header">
+          <div class="avatar-container" id="avatar-container" title="Click to customize identity">
+            <div class="avatar-gradient" id="avatar-initials">WW</div>
+            <div class="avatar-online-badge"></div>
+          </div>
+          <div class="profile-title-group">
+            <div class="name-row">
+              <h1 class="user-name" id="user-name-display" title="Click to edit name">Wilber WEN</h1>
+              <button class="edit-btn" id="edit-name-trigger" title="Customize name &amp; bio" aria-label="Customize profile">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="user-role" id="user-role-display">Creative Technologist &amp; Explorer</p>
+          </div>
+        </div>
+
+        <p class="user-bio" id="user-bio-display">
+          Building thoughtful digital experiences and exploring modern interfaces at the edge of craft.
+        </p>
+
+        <!-- Profile Tag Pills -->
+        <div class="tag-pills">
+          <span class="tag-pill">💻 Developer</span>
+          <span class="tag-pill">🎨 Designer</span>
+          <span class="tag-pill">☕ Coffee &amp; Code</span>
+          <span class="tag-pill highlight">✨ Open to Ideas</span>
+        </div>
+
+        <!-- Social / Quick Connect Buttons -->
+        <div class="social-links">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          <button id="quick-email-btn" class="social-btn" title="Send an Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Contact</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- World Clocks Widget -->
+      <section class="card glass-panel world-clocks-card" aria-label="World Times">
+        <div class="card-header">
+          <h2 class="card-title">World Cities</h2>
+          <span class="chip-badge">Live</span>
+        </div>
+        <div class="world-cities-grid">
+          <div class="city-item" data-tz="America/New_York">
+            <div class="city-meta">
+              <span class="city-name">New York</span>
+              <span class="city-offset">EDT</span>
+            </div>
+            <div class="city-time" id="city-ny">--:--</div>
+          </div>
+          <div class="city-item" data-tz="Europe/London">
+            <div class="city-meta">
+              <span class="city-name">London</span>
+              <span class="city-offset">BST</span>
+            </div>
+            <div class="city-time" id="city-lon">--:--</div>
+          </div>
+          <div class="city-item" data-tz="Asia/Tokyo">
+            <div class="city-meta">
+              <span class="city-name">Tokyo</span>
+              <span class="city-offset">JST</span>
+            </div>
+            <div class="city-time" id="city-tokyo">--:--</div>
+          </div>
+          <div class="city-item" data-tz="Australia/Sydney">
+            <div class="city-meta">
+              <span class="city-name">Sydney</span>
+              <span class="city-offset">AEST</span>
+            </div>
+            <div class="city-time" id="city-sydney">--:--</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Daily Inspiration / Thought Card -->
+      <section class="card glass-panel quote-card" aria-label="Daily Inspiration">
+        <div class="card-header">
+          <h2 class="card-title">Mindset &amp; Focus</h2>
+          <button id="refresh-quote-btn" class="action-icon-btn small" title="Get a new thought">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="quote-content">
+          <p class="quote-text" id="quote-text">"Time is what we want most, but what we use worst."</p>
+          <span class="quote-author" id="quote-author">— William Penn</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Crafted with precision &amp; modern aesthetics • <span id="current-year">2026</span></p>
+    </footer>
+  </div>
+
+  <!-- Interactive Profile Customizer Modal -->
+  <div class="modal-backdrop" id="edit-modal">
+    <div class="modal-dialog glass-panel">
+      <div class="modal-header">
+        <h3 class="modal-title">Customize Your Identity</h3>
+        <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="profile-form" class="modal-body">
+        <div class="form-group">
+          <label for="input-name">Your Display Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Wilber WEN" required maxlength="32">
+        </div>
+        <div class="form-group">
+          <label for="input-role">Title / Role</label>
+          <input type="text" id="input-role" placeholder="e.g. Creative Technologist & Explorer" maxlength="48">
+        </div>
+        <div class="form-group">
+          <label for="input-bio">Personal Tagline</label>
+          <textarea id="input-bio" rows="3" placeholder="A brief sentence about what you love doing..." maxlength="140"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-save-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toast">
+    <span class="toast-message" id="toast-message">Notification message</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
