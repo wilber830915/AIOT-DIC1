@@ -102,17 +102,7 @@ c:\Users\user\Desktop\DIC\
 
 ---
 
-## ⌨️ 3. 鍵盤快捷鍵（Keyboard Shortcuts）
-
-| 快捷鍵 | 功能說明 |
-| :---: | :--- |
-| <kbd>T</kbd> | 切換 12 小時制（AM/PM）/ 24 小時制 |
-| <kbd>C</kbd> | 複製當前格式化時間戳至剪貼簿（附 Toast 提示） |
-| <kbd>ESC</kbd> | 關閉身分自訂彈窗模態框 |
-
----
-
-## 🚀 4. 本機執行與快速啟動
+## 🚀 . 本機執行與快速啟動
 
 本專案為純原生靜態網頁，無需安裝任何 `node_modules`。使用任何本機伺服器即可啟動：
 
@@ -125,7 +115,7 @@ python -m http.server 8080
 
 ---
 
-## 🌐 5. GitHub 與 GitHub Pages 部署指南
+## 🌐 4. GitHub 與 GitHub Pages 部署指南
 
 ### 步驟 1：初始化並推送至 GitHub
 若您已在 GitHub 建立空的儲存庫（Repository），於專案目錄執行：
@@ -157,7 +147,7 @@ git push -u origin main
 
 ---
 
-## 🎯 6. 課堂學習檢核點（Learning Verification Checklist）
+## 🎯 5. 課堂學習檢核點（Learning Verification Checklist）
 
 - [x] **語意化結構**：使用標準 HTML5 語意化標籤（`<header>`、`<main>`、`<section>`、`<footer>`）與無障礙 ARIA 標籤。
 - [x] **CSS 設計系統**：運用 CSS 自訂屬性（Variables）建構支援三套主題切換的現代深色毛玻璃介面。
