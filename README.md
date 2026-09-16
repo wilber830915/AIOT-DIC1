@@ -1,15 +1,4 @@
-## 📌 1. 專案定位與架構理念（Pedagogical Storyline）
-
-本實作為 **AIoT-DA 課程 Lecture 2** 的課堂實作專案（DIC-1），貫徹 **「零框架、零建構依賴（Zero-Dependency Vanilla Stack）」** 的工程哲學。在不依賴任何外部前端函式庫（如 React、Vue）與打包工具（如 Vite、Webpack）的前提下，深入理解現代瀏覽器宿主環境與原生 Web 技術核心運作原理：
-
-$$\underbrace{\text{Browser}}_{\text{宿主環境}} \longrightarrow \underbrace{\text{HTML5}}_{\text{語意結構}} \longrightarrow \underbrace{\text{CSS3}}_{\text{Tokens 與毛玻璃}} \longrightarrow \underbrace{\text{Modern JS}}_{\text{時鐘引擎與事件}} \longrightarrow \underbrace{\text{DOM Manipulation}}_{\text{動態渲染}} \longrightarrow \underbrace{\text{LocalStorage}}_{\text{狀態持久化}} \longrightarrow \underbrace{\text{GitHub Pages}}_{\text{無伺服器上線}}$$
-
-> 💡 **銜接後續課程的架構伏筆**：  
-> 透過純原生 HTML/CSS/JavaScript 建立個人入口與動態儀表板，奠定對 DOM 生命週期、CSS 自訂屬性、非同步排程與事件循環的理解。這套視覺與狀態管理架構將在後續單元直接銜接 **FastAPI + SQLite** 感測數據流與物聯網即時視覺化看板。
-
----
-
-## 📁 2. 專案結構與模組說明
+## 📁 1. 專案結構與模組說明
 
 ```text
 c:\Users\user\Desktop\DIC\
@@ -28,7 +17,7 @@ c:\Users\user\Desktop\DIC\
 
 ---
 
-## ⚙️ 3. 核心功能與工程亮點
+## ⚙️ 2. 核心功能與工程亮點
 
 ### 1. 動態高精度時鐘（Hero Timekeeper）
 - **即時數位時鐘**：毫秒級輪詢即時更新小時、分鐘與秒數（`HH:MM:SS`），搭配跳動冒號動畫與等寬數字排版（`font-feature-settings: 'tnum'`），避免數字跳動造成版面位移。
@@ -57,7 +46,7 @@ c:\Users\user\Desktop\DIC\
 
 ---
 
-## ⌨️ 4. 鍵盤快捷鍵（Keyboard Shortcuts）
+## ⌨️ 3. 鍵盤快捷鍵（Keyboard Shortcuts）
 
 | 快捷鍵 | 功能說明 |
 | :---: | :--- |
@@ -67,7 +56,7 @@ c:\Users\user\Desktop\DIC\
 
 ---
 
-## 🚀 5. 本機執行與快速啟動
+## 🚀 4. 本機執行與快速啟動
 
 本專案為純原生靜態網頁，無需安裝任何 `node_modules`。使用任何本機伺服器即可啟動：
 
@@ -80,7 +69,7 @@ python -m http.server 8080
 
 ---
 
-## 🌐 6. GitHub 與 GitHub Pages 部署指南
+## 🌐 5. GitHub 與 GitHub Pages 部署指南
 
 ### 步驟 1：初始化並推送至 GitHub
 若您已在 GitHub 建立空的儲存庫（Repository），於專案目錄執行：
@@ -112,7 +101,7 @@ git push -u origin main
 
 ---
 
-## 🎯 7. 課堂學習檢核點（Learning Verification Checklist）
+## 🎯 6. 課堂學習檢核點（Learning Verification Checklist）
 
 - [x] **語意化結構**：使用標準 HTML5 語意化標籤（`<header>`、`<main>`、`<section>`、`<footer>`）與無障礙 ARIA 標籤。
 - [x] **CSS 設計系統**：運用 CSS 自訂屬性（Variables）建構支援三套主題切換的現代深色毛玻璃介面。
