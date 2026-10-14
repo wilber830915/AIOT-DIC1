@@ -1,6 +1,7 @@
-🌐 Live Demo & Interactive Web Application
-🐙 GitHub Repository: https://github.com/wilber830915/AIOT-DIC1
-🔗 Live Demo: https://wilber830915.github.io/AIOT-DIC1/
+
+GitHub Repository: https://github.com/wilber830915/AIOT-DIC1
+
+Live Demo: https://wilber830915.github.io/AIOT-DIC1/
 ![Damo](Damo.png)
 
 ## 📁 1. 專案結構與模組說明
